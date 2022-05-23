@@ -5,6 +5,8 @@ import { SectionGroup } from "../components/section/SectionGroup";
 import { SectionPanel } from "../components/section/SectionPanel";
 import { DataService } from "../service/DataService";
 
+import dayjs from 'dayjs';
+
 import "./QuestionOne.css";
 
 export const QuestionOne: React.FC<{ service: IDataService }> = () => {
@@ -32,13 +34,13 @@ export const QuestionOne: React.FC<{ service: IDataService }> = () => {
 
   const fetchJobs = async (key: any) => {
     setKeyword(key);
-    if (key.length >= 3) {
+    if (key.trim().length >= 3) {
       toggleIsLoading();
       await DataService.getJobsWithSearchTerm(key).then((res) => {
         toggleIsLoading();
         setResult(res);
       });
-    } else if (key.length === 0) {
+    } else if (key.trim().length === 0) {
       setResult([]);
     }
   };
@@ -67,27 +69,25 @@ export const QuestionOne: React.FC<{ service: IDataService }> = () => {
           <p>fetching jobs...</p>
         ) : result.length > 0 ? (
           result.map((res: Job, i: number) => (
-            <div key={i}>
-              <br />
-              {"Name: "}
+            <div key={i} className="job-item">
+              <span className="fw-bold">Name: </span>
               {res.name}
-              {", "}
               <br />
-              {"Start date: "}
-              {res.start}
-              {", "}
+              <span className="fw-bold">Start date: </span>
+              {dayjs(res.start).format('ddd MMM DD YYYY hh:mm A')}
               <br />
-              {"End date: "}
-              {res.end}
-              {", "}
+              <span className="fw-bold">End date: </span>
+              {dayjs(res.end).format('ddd MMM DD YYYY hh:mm A')}
               <br />
-              {"Contact Id: "} {res.contactId}
+              <span className="fw-bold">Contact Id: </span>
+              {res.contactId}
               <br />
             </div>
           ))
         ) : keyword.length < 3 ? (
           <p>Please type at least 3 characters to search</p>
         ) : <p>No job found</p> }
+        {result.length > 0 && <p className="text-center">Please clear the search field to clear job results</p>}
       </SectionPanel>
     </SectionGroup>
   );

@@ -1,0 +1,20 @@
+.job-item {
+  width: 60%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 14px;
+  border-color: #ffa260;
+  box-shadow: 0 1px 6px 0 #d4d7de;
+  transition: all 0.4s;
+}
+.job-item:hover {
+  cursor: pointer;
+  box-shadow: 0 0.5em 0.5em -0.4em;
+  transform: translateY(-0.25em);
+}
+.fw-bold {
+  font-weight: bold;
+}
+.text-center {
+    text-align: center;
+}
